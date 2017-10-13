@@ -24,7 +24,7 @@ class CommHelper {
                 dos = DataOutputStream(p.outputStream)
                 dis = DataInputStream(p.inputStream)
 
-                dos.writeBytes(cmd + "\n")
+                dos.writeBytes("$cmd\n")
                 dos.flush()
                 dos.writeBytes("exit\n")
                 dos.flush()
@@ -38,29 +38,6 @@ class CommHelper {
                 log("e", "执行命令($cmd)出错：${e.message}", e)
             } finally {
                 dis?.close()
-                dos?.close()
-            }
-            return result
-        }
-
-        /**
-         * 执行root命令，不返回执行结果
-         */
-        fun execRootCmdSilent(cmd: String): Int {
-            var result = -1
-            var dos: DataOutputStream? = null
-            try {
-                val p = Runtime.getRuntime().exec("su");
-                dos = DataOutputStream(p.outputStream)
-                dos.writeBytes(cmd + "\n")
-                dos.flush()
-                dos.writeBytes("exit\n")
-                dos.flush()
-                p.waitFor()
-                result = p.exitValue()
-            } catch (e: Exception) {
-                log("e", "执行命令($cmd)出错：${e.message}", e)
-            } finally {
                 dos?.close()
             }
             return result
@@ -96,7 +73,7 @@ class CommHelper {
         }
 
         private val DEBUG_TAG = "ClearFolder"
-        val WAIT_SCAN_FOLDERS = "/system/app\n/system/priv-app\n"
+        val WAIT_SCAN_FOLDERS = "/system/app\n/system/priv-app\n/data/app\n/data/app-private"
 
         val SCAN_FOLDERS = "scan_folders"
     }

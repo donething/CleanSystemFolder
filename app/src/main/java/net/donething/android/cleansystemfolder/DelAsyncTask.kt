@@ -7,6 +7,8 @@ import net.donething.android.tools.CommHelper
 
 class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String>) : AsyncTask<String, Int, String>() {
     override fun onPreExecute() {
+        activity.progressBar.max = delWaitList.size
+        activity.progressBar.progress = 0
         activity.progressText.text = "正在删除无用的系统文件夹:"
         activity.progressDialog.show()
     }
@@ -17,7 +19,7 @@ class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String
         delWaitList.forEach {
             CommHelper.log("i", "删除系统文件夹：$it")
             try {
-                CommHelper.execRootCmd("rm -r $it")
+                CommHelper.execRootCmd("rm -r \"$it\"")
                 hadDelFolderList.add(it)
                 folderDel++
                 publishProgress(folderDel)
@@ -35,8 +37,8 @@ class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String
     override fun onPostExecute(result: String?) {
         activity.progressDialog.dismiss()
         val folders = StringBuilder()
-        hadDelFolderList.forEachIndexed { index, str ->
-            folders.append("$index. $str\n")
+        hadDelFolderList.forEach {
+            folders.append("$it\n")
         }
         CommHelper.makeDialog(activity, "文件夹删除完成", folders.toString(), "明白了").show()
     }
