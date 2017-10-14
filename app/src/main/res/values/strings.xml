@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">清理系统文件夹</string>
+    <string name="app_name">清理应用文件夹</string>
     <string name="progress_dialog_title">任务进度</string>
     <string name="progress_tv_text">进度说明：</string>
     <string name="progress_tv_status">0/100</string>
+    <string name="et_folders_hint">待清理应用文件夹完整路径，每行一条</string>
+    <string name="bn_scan_folders">扫描无用的应用文件夹</string>
 </resources>

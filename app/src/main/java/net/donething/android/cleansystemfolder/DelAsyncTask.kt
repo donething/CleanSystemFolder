@@ -15,7 +15,7 @@ class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String
 
     override fun doInBackground(vararg p0: String?): String {
         var folderDel = 0                         // 已删除的文件夹数
-        activity.progressText.text = "删除系统文件夹"
+        activity.progressText.text = "删除系统文件夹："
         delWaitList.forEach {
             CommHelper.log("i", "删除系统文件夹：$it")
             try {
@@ -31,7 +31,7 @@ class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String
     }
 
     override fun onProgressUpdate(vararg values: Int?) {
-        activity.progressText.text = "${values[0]}"
+        activity.progressStatus.text = "${values[0]}"
     }
 
     override fun onPostExecute(result: String?) {
@@ -43,5 +43,5 @@ class DelAsyncTask(val activity: MainActivity, val delWaitList: ArrayList<String
         CommHelper.makeDialog(activity, "文件夹删除完成", folders.toString(), "明白了").show()
     }
 
-    val hadDelFolderList = arrayListOf<String>()
+    private val hadDelFolderList = arrayListOf<String>()
 }
