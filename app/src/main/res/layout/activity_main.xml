@@ -12,15 +12,17 @@
         style="?android:attr/textAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/et_folders_hint" />
+        android:text="@string/et_folders_hint"
+        android:textColor="@color/colorAccent" />
 
     <EditText
         android:id="@+id/etFolders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:gravity="start|top"
         android:hint="@string/et_folders_hint"
-        android:lines="8"
+        android:lines="5"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 

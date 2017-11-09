@@ -20,15 +20,16 @@ class ScanAsyncTask(val activity: MainActivity) : AsyncTask<String, Int, String>
         CommHelper.execRootCmd("mount -o rw,remount /system")           // 挂载system分区
         val folders = activity.etFolders.text.toString().trim().split("\n")
         folders.forEach { sysFolder ->
-            val sysFiles = CommHelper.execRootCmd("ls \"$sysFolder\"")      // 获取系统文件夹下的文件列表
+            val sysFiles = CommHelper.execRootCmd("ls -d \"$sysFolder\"/*/")      // 获取系统文件夹下的文件夹列表
             sysFiles.forEach { appFolder ->
                 updatePText("正在扫描：$sysFolder")
                 folderTotal++
                 updatePStatus(folderTotal.toString())
-                appFileList = CommHelper.execRootCmd("ls \"$sysFolder/$appFolder\"")    // 获取应用文件夹下文件列表
+                appFileList = CommHelper.execRootCmd("ls \"$appFolder\"")    // 获取应用文件夹下文件列表
                 // 如果应用文件夹下没有".apk"文件，则表示是无用的文件夹，待删除
                 if (!(appFileList.toString().contains(".apk", true))) {
-                    delWaitList.add("$sysFolder/$appFolder")
+                    CommHelper.log("i", "添加待删除的系统文件夹：$appFolder")
+                    delWaitList.add(appFolder)
                 }
             }
         }
